@@ -21,7 +21,7 @@ object Main {
       fileUtil.getCsvFileList(dir)
     } match {
       case Success(files) =>
-        val futureComp = List.fill(10)(files.toList).flatten.map(file => {
+        val futureComp = files.map(file => {
           val source = csvAccumulator.getSourceFromCSVFile(file.toString())
           csvAccumulator.buildSensorDataFromSource(source)
         })
