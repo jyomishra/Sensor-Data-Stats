@@ -42,12 +42,13 @@ class OutputFormatterSpec  extends TestKit(ActorSystem("TestingAkkaStreams"))
       totalMeasureCount shouldBe 2
     }
 
-    "return sorted sensor data for printing" in {
-      val sensorOutputMap = Map("s2" -> SensorOutput(78,80,158,2,0), "s3" -> SensorOutput(-1,0,0,0,1),
-        "s1" -> SensorOutput(98,98,98,1,0), "s6" -> SensorOutput(-1,0,0,0,1))
+    "return sorted sensor data based on average for printing" in {
+      val sensorOutputMap = Map("s2" -> SensorOutput(77,81,158,2,0), "s3" -> SensorOutput(-1,0,0,0,1),
+        "s1" -> SensorOutput(98,98,98,1,0), "s5" -> SensorOutput(80,80,80,1,1), "s6" -> SensorOutput(-1,0,0,0,1))
       val sortedOutput = outputFormatter.getSortedSensorData(sensorOutputMap)
       sortedOutput.head._2.max shouldBe 98
       sortedOutput.tail.head._2.max shouldBe 80
+      sortedOutput.tail.tail.head._2.max shouldBe 81
     }
 
     "print sorted no of records from sensor data" in {
